@@ -43,8 +43,12 @@ function parseLatLon(input: string): Coord | null {
 
 export default function Planner() {
   const [city, setCity] = useState<CityPreset>(CITY_PRESETS[0]);
-  const [fromText, setFromText] = useState("");
-  const [toText, setToText] = useState("");
+
+  const originText = `${(city.center[1] - 0.02).toFixed(4)}, ${city.center[0].toFixed(4)}`;
+  const destText = `${(city.center[1] + 0.02).toFixed(4)}, ${city.center[0].toFixed(4)}`;
+
+  const [fromText, setFromText] = useState(originText);
+  const [toText, setToText] = useState(destText);
   const [result, setResult] = useState<CompareResponse | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -57,12 +61,13 @@ export default function Planner() {
   }, []);
 
   // Prefill origin/destination from the city centre on city change.
+  // (setState-in-effect is intentional: city change resets user input.)
   useEffect(() => {
-    const c = city.center;
-    setFromText(`${(c[1] - 0.02).toFixed(4)}, ${c[0].toFixed(4)}`);
-    setToText(`${(c[1] + 0.02).toFixed(4)}, ${c[0].toFixed(4)}`);
+    setFromText(originText);
+    setToText(destText);
     clearResult();
-  }, [city, clearResult]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [city]);
 
   async function compare() {
     const from = parseLatLon(fromText);
@@ -178,11 +183,10 @@ export default function Planner() {
       <div className="grid gap-6 lg:grid-cols-[1.1fr_1fr]">
         {/* Map */}
         <div className="overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
-          <RouteMap
+<RouteMap
             routes={result?.routes ?? []}
             city={city}
             origin={result?.origin ?? null}
-            destination={result?.destination ?? null}
             selectedIndex={selected}
             onSelect={setSelected}
           />

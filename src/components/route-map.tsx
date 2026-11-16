@@ -16,9 +16,7 @@ import "leaflet/dist/leaflet.css";
 interface Props {
   routes: ScoredRoute[];
   city: CityPreset;
-  /** Origin and destination in [lon, lat]. */
   origin: Coord | null;
-  destination: Coord | null;
   selectedIndex: number | null;
   onSelect: (index: number) => void;
 }
@@ -31,7 +29,6 @@ export default function RouteMap({
   routes,
   city,
   origin,
-  destination,
   selectedIndex,
   onSelect,
 }: Props) {
