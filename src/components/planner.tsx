@@ -63,6 +63,7 @@ export default function Planner() {
   // Prefill origin/destination from the city centre on city change.
   // (setState-in-effect is intentional: city change resets user input.)
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setFromText(originText);
     setToText(destText);
     clearResult();
