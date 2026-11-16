@@ -3,24 +3,15 @@
 This file documents the **AirScout Delivery Board** GitHub Project (Projects v2).
 It is the recommended way to track the M1–M8 milestones.
 
-> Creating a Projects v2 board requires the `project` OAuth scope. If your `gh`
-> token does not have it, run once in your own terminal:
->
-> ```bash
-> gh auth refresh --scopes project
-> ```
->
-> Then create the board with:
->
-> ```bash
-> gh api graphql -f query='
->   mutation($input: CreateProjectV2Input!) {
->     createProjectV2(input: $input) {
->       projectV2 { id number title url }
->     }
->   }
-> ' -f input[title]='AirScout Delivery Board' -f input[ownerId]='U_kgDOCqNSYw'
-> ```
+## Live board
+
+**URL:** https://github.com/users/OPBSUTHAR/projects/3 (Project #3)
+
+Created via the GitHub Projects v2 GraphQL API. All 8 milestone issues are added as
+items and set to **Done** (every milestone shipped in v1.0.0).
+
+> The `project` OAuth scope is required to create/manage Projects v2 boards.
+> Refresh your token with `gh auth refresh --scopes project` if needed.
 
 ## Board layout
 
